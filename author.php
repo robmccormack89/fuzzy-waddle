@@ -2,7 +2,7 @@
 /**
 * The template for displaying author archive pages
 *
-* @package Starter_Theme
+* @package DC_Brochure_Theme
 */
 
 global $wp_query;

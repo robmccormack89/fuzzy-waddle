@@ -2,7 +2,7 @@
 /**
  * The template for displaying general archive pages
  *
- * @package Starter_Theme
+ * @package DC_Brochure_Theme
  */
 
 $templates = array( 'archive.twig', 'index.twig' );

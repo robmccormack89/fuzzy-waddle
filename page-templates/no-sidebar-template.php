@@ -2,7 +2,7 @@
 /**
  * Template Name: No Sidebar Template
  *
- * @package Starter_Theme
+ * @package DC_Brochure_Theme
  */
 
 $context = Timber::context();

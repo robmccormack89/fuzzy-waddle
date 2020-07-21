@@ -1,8 +1,8 @@
 <?php
 /**
- * Starter Theme functions and definitions
+ * DC Brochure Theme functions and definitions
  *
- * @package Starter_Theme
+ * @package DC_Brochure_Theme
  */
 
 /**

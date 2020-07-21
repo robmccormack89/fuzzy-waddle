@@ -2,7 +2,7 @@
 /**
  * The default template for displaying all pages
  *
- * @package Starter_Theme
+ * @package DC_Brochure_Theme
  */
 
 $context = Timber::context();
