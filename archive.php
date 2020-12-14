@@ -27,6 +27,10 @@ if ( is_day() ) {
 } else if ( is_post_type_archive() ) {
 	$context['title'] = post_type_archive_title( '', false );
 	array_unshift( $templates, 'archive-' . get_post_type() . '.twig' );
+} else if ( is_tax( 'service-type' ) ) {
+	$context['title'] = single_term_title( '', false );
+	array_unshift( $templates, 'archive-service-type.twig' );
+	$context['archive_description'] = get_the_archive_description();
 }
 
 $context['posts'] = new Timber\PostQuery();

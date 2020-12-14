@@ -1,0 +1,26 @@
+{% set thumb_src = '/wp-content/uploads/2020/08/2250-8-1547045021-scaled.jpg' %}
+<div class="uk-cover-container">
+  <img data-src="{{thumb_src}}" alt="" uk-cover uk-img>
+  <div class="uk-position-z-index uk-position-relative testimonials-overlay">
+    <div class="uk-section uk-section-large">
+      <div class="uk-container uk-container-small">
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true">
+          <ul class="uk-slider-items uk-child-width-1-1">
+            
+            {% for post in testimonial_posts %}
+            <li>
+              <div class="uk-light uk-text-center">
+                <h6>TESTIMONIALS</h6>
+                <h2 class="uk-margin-small-top testimonials-slider-heading">{{post.content}}</h2>
+                <p class="uk-text-meta">{{post.title}}</p>
+              </div>
+            </li>
+            {% endfor %}
+            
+          </ul>
+          <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

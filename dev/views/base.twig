@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html {{site.language_attributes}}>
+  <head>
+  <meta charset="{{site.charset}}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{ function('wp_head') }}
+  </head>
+  
+  <style>
+  
+    /* UIKit based resonsive breakpoints */
+    @media only screen and (max-width:479px) {
+      .tease-feature-related {
+        max-height: 200px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @media only screen and (min-device-width:480px) and (max-device-width:767px) {
+      .tease-feature-related {
+        max-height: 300px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  
+  </style>
+  
+  <body class="{{ body_class }} {{ posts_more_than_one_class }}" data-template="base.twig">
+    
+    <div id="SiteWrapper" class="site-wrapper">
+      
+      {% block header %}
+      {% include 'header.twig' %}
+      {% endblock %}
+
+      <main role="main" id="MainContent">
+        {% block content %}
+        <p>Sorry, Nothing to Display!!</p>
+        {% endblock %}
+      </main>
+
+      {% block footer %}
+      {% include 'footer.twig' %}
+      {% endblock %}
+
+    </div>
+    
+    {{ function('wp_footer') }}
+    
+  </body>
+</html>

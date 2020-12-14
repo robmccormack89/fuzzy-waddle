@@ -1,0 +1,32 @@
+{% extends "page.twig" %}
+
+{% block page_before %}
+{% set thumb_src = site_default_img %}
+
+<!-- page hero -->
+<section class="hero-section">
+  <div class="uk-width-1-1">
+    <div class="uk-light wrap uk-background-norepeat uk-background-cover uk-background-center-center uk-cover-container uk-background-secondary" style="background-image: url('{{ thumb_src }}');" uk-parallax="bgy: -100;">
+      <div class="uk-flex uk-flex-center uk-flex-middle uk-position-z-index uk-position-relative hero-overlay">
+        <!-- text content -->
+        <div class="uk-container uk-container-small uk-flex-auto uk-text-center">
+          <div class="uk-section ">
+            <h1 class="uk-heading-primary animate uk-text-bold">{{post.title}}</h1>
+          </div>
+        </div>
+        <!-- /text content -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /page hero -->
+{% endblock %}
+
+{% block page_after %}
+<!--  -->
+{% include 'testimonials-section.twig' %}
+<!-- / -->
+<!--  -->
+{% include 'logos-section.twig' %}
+<!-- / -->
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "page.twig" %}
+
+{% block main %}
+
+<div id="page-{{post.ID}}" class="post-type-{{ post.post_type }} {{post.class}}" data-template="blank-template.twig">
+  
+  {% block page_content %}
+  {{post.content}}
+  {% endblock %}
+
+</div>
+
+{% endblock %}

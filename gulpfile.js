@@ -33,33 +33,6 @@ function style() {
         // .pipe(browserSync.stream());
 }
 
-
-// A simple task to reload the page
-// function reload() {
-//     browserSync.reload();
-// }
-
-// Add browsersync initialization at the start of the watch task
-// function watch() {
-//     browserSync.init({
-//         // You can tell browserSync to use this directory and serve it as a mini-server
-//         proxy: "yourproxyurl.link"
-//         // If you are already serving your website locally using something like xampp (hosts & httpd.conf files!)
-//         // You can use the proxy setting to proxy that
-//         // proxy: "syourproxyurl.link"
-//     });
-//     gulp.watch(paths.styles.src, style);
-//     // We should tell gulp which files to watch to trigger the reload
-//     // This can be html or whatever you're using to develop your website (twig!!)
-//     gulp.watch("*.twig").on('change', browserSync.reload);
-//     // gulp.watch("style.scss").on('change', browserSync.reload);
-//     // gulp.watch("test/*.twig").on('change', browserSync.reload);
-//     // gulp.watch("assets/css/custom.css").on('change', browserSync.reload);
-// }
-
-// Don't forget to expose the task!
-// exports.watch = watch
-
 // Expose the task by exporting it
 // This allows you to run it from the commandline using gulp style. this is what I use mainly
 exports.style = style;

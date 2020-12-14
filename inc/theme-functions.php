@@ -4,6 +4,19 @@
  *
  * @package DC_Brochure_Theme
  */
+ 
+//
+function add_tax_base_to_service_permalinks( $post_link, $id = 0 ){
+   $post = get_post($id);  
+   if ( is_object( $post ) ){
+       $terms = wp_get_object_terms( $post->ID, 'service-type' );
+       if( $terms ){
+           return str_replace( '%service-type%' , $terms[0]->slug , $post_link );
+       }
+   }
+   return $post_link;  
+}
+add_filter( 'post_type_link', 'add_tax_base_to_service_permalinks', 1, 3 );
 
 // get the current year, this is passed onto twig as a global variable in timber-functions.php
 function currentYear()
@@ -11,34 +24,15 @@ function currentYear()
     return date('Y');
 }
 
-// 
-function is_no_sidebar_template_width_class()
+// check for if the archive is paginated, for use in templates to conditionally display the pagi block
+function is_paginated()
 {
-  if (is_page_template('page-templates/no-sidebar-template.php')) {
-      return 'uk-width-1-1';
-  } else {
-      return 'uk-width-2-3@m';
-  };
-}
-
-// 
-function if_posts_published_more_than_one()
-{
-  if( wp_count_posts()->publish > 1 ) :
-      return true;
-  else:
-      return false;
-  endif;
-}
-
-// 
-function if_posts_more_than_one_return_class()
-{
-  if( wp_count_posts()->publish > 1 ) :
-      return 'posts-exists';
-  else:
-      return '';
-  endif;
+    global $wp_query;
+    if ($wp_query->max_num_pages > 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // 
@@ -54,68 +48,57 @@ function is_left_sidebar_template()
 // 
 function is_right_sidebar_template()
 {
-  if (is_single() || is_page() && ! is_page_template(array( 'page-templates/left-sidebar-template.php', 'page-templates/no-sidebar-template.php' ))) {
+  if ( is_page_template( 'page-templates/right-sidebar-template.php' ) || is_page( array( 'air-conditioning', 'beer-cooling-systems', 'catering-equipment', 'cold-freezer-rooms', 'dishwashers', 'fridges-freezers', 'ovens', 'washing-machines' ) ) || is_singular('services-repairs') ) {
     return true;
   } else {
     return false;
   };
 }
 
-// check for if the archive is paginated, for use in templates to conditionally display the pagi block
-function is_paginated()
+// 
+function template_section_class()
 {
-    global $wp_query;
-    if ($wp_query->max_num_pages > 1) {
-        return true;
-    } else {
-        return false;
-    }
+  if (is_page_template('page-templates/full-width-template.php')) {
+      return 'no-section-class';
+  } elseif (is_page_template('page-templates/container-width-template.php')) {
+      return 'uk-section uk-section-large uk-section-default';
+  } else {
+      return 'uk-section uk-section-default';
+  };
 }
-// removes sticky posts from main loop, this function fixes issue of duplicate posts on archive. see https://wordpress.stackexchange.com/questions/225015/sticky-post-from-page-2-and-on
-add_action('pre_get_posts', function ($q) {
-    if ($q->is_home()       // Only target the homepage
-         && $q->is_main_query() // Only target the main query
-    ) {
-        // Remove sticky posts
-        $q->set('ignore_sticky_posts', 1);
 
-        // Get the sticky posts array
-        $stickies = get_option('sticky_posts');
+// 
+function template_width_class()
+{
+  if (is_page_template(array( 'page-templates/left-sidebar-template.php', 'page-templates/right-sidebar-template.php' )) || is_singular('services-repairs')) {
+      return 'uk-container uk-container-small';
+  } elseif (is_page_template('page-templates/container-width-template.php')) {
+      return 'uk-container';
+  } elseif (is_page_template('page-templates/full-width-template.php')) {
+      return 'no-container';
+  } else {
+      return 'uk-container uk-container-xsmall';
+  }
+}
 
-        // Make sure we have stickies before continuing, else, bail
-        if (!$stickies) {
-            return;
-        }
+// 
+function article_width_class()
+{
+  if (is_page_template(array( 'page-templates/left-sidebar-template.php', 'page-templates/right-sidebar-template.php' )) || is_singular('services-repairs')) {
+      return 'uk-width-2-3@m';
+  } else {
+      return 'uk-width-1-1';
+  };
+}
 
-        // Great, we have stickies, lets continue
-        // Lets remove the stickies from the main query
-        $q->set('post__not_in', $stickies);
-
-        // Lets add the stickies to page one via the_posts filter
-        if ($q->is_paged()) {
-            return;
-        }
-
-        add_filter('the_posts', function ($posts, $q) use ($stickies) {
-            // Make sure we only target the main query
-            if (!$q->is_main_query()) {
-                return $posts;
-            }
-
-            // Get the sticky posts
-            $args = [
-                'posts_per_page' => count($stickies),
-                'post__in'       => $stickies
-            ];
-            $sticky_posts = get_posts($args);
-
-            // Lets add the sticky posts in front of our normal posts
-            $posts = array_merge($sticky_posts, $posts);
-
-            return $posts;
-        }, 10, 2);
-    }
-});
+function is_services_page()
+{
+  if (is_page( array( 'air-conditioning', 'beer-cooling-systems', 'catering-equipment', 'cold-freezer-rooms', 'dishwashers', 'fridges-freezers', 'ovens', 'washing-machines' ))) {
+    return true;
+  } else {
+    return false;
+  };
+}
 
 // stuff to say we need timber activated!! see TGM Plugin activation library
 function dc_brochure_theme_register_required_plugins()

@@ -1,0 +1,42 @@
+{% extends "single.twig" %}
+
+{% block main %}
+
+<div id="page-{{post.ID}}" class="post-type-{{ post.post_type }} {{post.class}}" data-template="page.twig">
+  
+  {% block page_before %}
+  {% include 'page-hero-section.twig' %}
+  {% endblock %}
+  
+  {% block page_content %}
+  <!--  -->
+  <section class="{{template_section_class}}">
+    <div class="{{template_width_class}}">
+      <div class="uk-grid-large" uk-grid>
+        
+        {% if is_left_sidebar %}
+        {% include 'sidebar.twig' %}
+        {% endif %}
+        
+        <div class="{{article_width_class}}">
+          
+          {{post.content}}
+          
+        </div>
+
+        {% if is_right_sidebar %}
+        {% include 'sidebar.twig' %}
+        {% endif %}
+        
+      </div>
+  	</div>
+  </section>
+  <!-- / -->
+  {% endblock %}
+  
+  {% block page_after %}
+  {% endblock %}
+
+</div>
+
+{% endblock %}
